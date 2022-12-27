@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Il mio sito web</title>
+  <style>
+   form {
+  width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+  </style>
+</head>
+<body>
+<form>
+  <label for="meals-per-day">Quanti pasti cucini personalmente al giorno?</label><br>
+  <input type="number" id="meals-per-day" name="meals-per-day"><br>
+  <label for="time-per-meal">In media quanto tempo impeghi per preparare un pasto?</label><br>
+  <input type="number" id="time-per-meal" name="time-per-meal"><br>
+  <label for="savings">In percentuale, quanto tempo pensi di poter risparmiare con questo dispositivo?</label><br>
+  <input type="number" id="savings" name="savings"><br>
+  <label for="hourly-rate">Quanto vale un'ora del tuo tempo, in Euro?</label><br>
+  <input type="number" id="hourly-rate" name="hourly-rate"><br>
+</form> 
+  <script>
+// Aggiungi un evento di submit al form per calcolare i risparmi in tempo e denaro
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita il submit del form e l'aggiornamento della pagina
+
+  // Leggi i valori dei campi di input
+  var mealsPerDay = document.getElementById('meals-per-day').value;
+  var timePerMeal = document.getElementById('time-per-meal').value;
+  var savings = document.getElementById('savings').value;
+  var hourlyRate = document.getElementById('hourly-rate').value;
+
+  // Calcola il tempo totale risparmiato al giorno
+  var timeSavedPerDay = mealsPerDay * timePerMeal * (savings / 100);
+
+  // Calcola il denaro risparmiato al giorno
+  var moneySavedPerDay = timeSavedPerDay * (hourlyRate / 60);
+
+  // Mostra i risultati al utente
+  alert('Hai risparmiato ' + timeSavedPerDay + ' ore al giorno, per un totale di ' + moneySavedPerDay + ' Euro al giorno.');
+});
+  </script>
+</body>
+</html>
