@@ -1,63 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Il mio sito web</title>
-  <style>
-   form {
-  width: 400px;
-  margin: 0 auto;
-  text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-input[type="number"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-  </style>
+  <title>Time and Money Savings Calculator</title>
 </head>
 <body>
-<form>
-  <label for="meals-per-day">Quanti pasti cucini personalmente al giorno?</label><br>
-  <input type="number" id="meals-per-day" name="meals-per-day"><br>
-  <label for="time-per-meal">In media quanto tempo impeghi per preparare un pasto?</label><br>
-  <input type="number" id="time-per-meal" name="time-per-meal"><br>
-  <label for="savings">In percentuale, quanto tempo pensi di poter risparmiare con questo dispositivo?</label><br>
-  <input type="number" id="savings" name="savings"><br>
-  <label for="hourly-rate">Quanto vale un'ora del tuo tempo, in Euro?</label><br>
-  <input type="number" id="hourly-rate" name="hourly-rate"><br>
-</form> 
+  <form id="calculatorForm">
+    <div>
+      <label for="mealsPerDay">Quanti pasti cucini personalmente al giorno?</label>
+      <input type="number" id="mealsPerDay" placeholder="0">
+    </div>
+    <div>
+      <label for="minutesPerMeal">In media quanti minuti impeghi per preparare un pasto?</label>
+      <input type="number" id="minutesPerMeal" placeholder="0">
+    </div>
+    <div>
+      <label for="timeSavings">In percentuale, quanto tempo pensi di poter risparmiare con questo dispositivo per ogni pasto? (es. 10%, 30%...)</label>
+      <input type="number" id="timeSavings" placeholder="0">
+    </div>
+    <div>
+      <label for="hourlyWage">Quanto vale un'ora del tuo tempo, in Euro?</label>
+      <input type="number" id="hourlyWage" placeholder="0">
+    </div>
+    <div>
+      <label for="financingMonths">Quanti mesi dura il finanziamento?</label>
+      <input type="number" id="financingMonths" placeholder="0">
+    </div>
+    <div>
+      <label for="applianceCost">Quanto costa l'elettrodomestico in Euro?</label>
+      <input type="number" id="applianceCost" placeholder="0">
+    </div>
+    <div>
+      <label for="applianceLifetime">Per quanti anni pensi di utilizzare l'elettrodomestico prima di doverlo cambiare?</label>
+      <input type="number" id="applianceLifetime" placeholder="0">
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+    <div id="result"></div>
+
+
+
+  </form>
+
   <script>
-// Aggiungi un evento di submit al form per calcolare i risparmi in tempo e denaro
-form.addEventListener('submit', function(event) {
-  event.preventDefault(); // Evita il submit del form e l'aggiornamento della pagina
+    function calculateTimeAndMoneySavings() {
+  // Recupera i valori degli input
+  const mealsPerDay = parseInt(document.getElementById('mealsPerDay').value);
+  const minutesPerMeal = parseInt(document.getElementById('minutesPerMeal').value);
+  const timeSavings = parseInt(document.getElementById('timeSavings').value);
+  const hourlyWage = parseInt(document.getElementById('hourlyWage').value);
+  const financingMonths = parseInt(document.getElementById('financingMonths').value);
+  const applianceCost = parseInt(document.getElementById('applianceCost').value);
+  const applianceLifetime = parseInt(document.getElementById('applianceLifetime').value);
 
-  // Leggi i valori dei campi di input
-  var mealsPerDay = document.getElementById('meals-per-day').value;
-  var timePerMeal = document.getElementById('time-per-meal').value;
-  var savings = document.getElementById('savings').value;
-  var hourlyRate = document.getElementById('hourly-rate').value;
+  // Calcola il tempo totale trascorso cucinando ogni giorno
+  const totalTimeSpentCooking = mealsPerDay * minutesPerMeal;
 
-  // Calcola il tempo totale risparmiato al giorno
-  var timeSavedPerDay = mealsPerDay * timePerMeal * (savings / 100);
+  // Calcola il tempo risparmiato ogni giorno
+  const timeSavedPerDay = totalTimeSpentCooking * timeSavings / 100;
 
-  // Calcola il denaro risparmiato al giorno
-  var moneySavedPerDay = timeSavedPerDay * (hourlyRate / 60);
+  // Calcola il tempo risparmiato in un anno
+  const timeSavedPerYear = timeSavedPerDay * 365;
 
-  // Mostra i risultati al utente
-  alert('Hai risparmiato ' + timeSavedPerDay + ' ore al giorno, per un totale di ' + moneySavedPerDay + ' Euro al giorno.');
+  // Calcola il tempo risparmiato nel periodo di utilizzo dell'elettrodomestico
+  const totalTimeSaved = timeSavedPerYear * applianceLifetime;
+
+  // Calcola il denaro risparmiato nel periodo di utilizzo dell'elettrodomestico
+  const totalMoneySaved = totalTimeSaved * hourlyWage;
+
+  // Calcola il tempo necessario per ripagare l'elettrodomestico
+  const yearsToPayOff = applianceCost / (totalMoneySaved / applianceLifetime);
+
+  // Mostra il risultato nella pagina
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = `
+    Ore di vita risparmiate nei prossimi ${applianceLifetime} anni: ${totalTimeSaved}<br>
+    Denaro risparmiato nei prossimi anni: ${totalMoneySaved} €<br>
+    L'elettrodomestico si ripaga da solo tra ${yearsToPayOff} anni
+  `;
+}
+
+// Ascolta il submit del form
+document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+  // Previene il comportamento di default del form
+  event.preventDefault();
+
+  // Calcola il tempo e il denaro risparmiati
+  calculateTimeAndMoneySavings();
 });
-  </script>
-</body>
-</html>
