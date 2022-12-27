@@ -43,7 +43,7 @@
   </form>
 
   <script>
-    function calculateTimeAndMoneySavings() {
+   function calculateTimeAndMoneySavings() {
   // Recupera i valori degli input
   const mealsPerDay = parseInt(document.getElementById('mealsPerDay').value);
   const minutesPerMeal = parseInt(document.getElementById('minutesPerMeal').value);
@@ -71,13 +71,12 @@
   // Calcola il tempo necessario per ripagare l'elettrodomestico
   const yearsToPayOff = applianceCost / (totalMoneySaved / applianceLifetime);
 
-  // Mostra il risultato nella pagina
-  const resultDiv = document.getElementById('result');
-  resultDiv.innerHTML = `
-    Ore di vita risparmiate nei prossimi ${applianceLifetime} anni: ${totalTimeSaved}<br>
-    Denaro risparmiato nei prossimi anni: ${totalMoneySaved} €<br>
+  // Mostra il risultato in un popup
+  alert(`
+    Ore di vita risparmiate nei prossimi ${applianceLifetime} anni: ${totalTimeSaved}
+    Denaro risparmiato nei prossimi anni: ${totalMoneySaved} €
     L'elettrodomestico si ripaga da solo tra ${yearsToPayOff} anni
-  `;
+  `);
 }
 
 // Ascolta il submit del form
@@ -88,3 +87,5 @@ document.getElementById('calculatorForm').addEventListener('submit', function(ev
   // Calcola il tempo e il denaro risparmiati
   calculateTimeAndMoneySavings();
 });
+
+  </script>
